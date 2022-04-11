@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/textile1"
+        android:icon="@drawable/silk_icon"
+        android:title="Silk"/>
+    <item
+        android:id="@+id/textile2"
+        android:icon="@drawable/wool_icon"
+        android:title="Wool" />
+    <item
+        android:id="@+id/textile3"
+        android:icon="@drawable/leather_icon"
+        android:title="Leather" />
+    <item
+        android:id="@+id/textile4"
+        android:icon="@drawable/denim_icon"
+        android:title="Denim" />
+
+</menu>
