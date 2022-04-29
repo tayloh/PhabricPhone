@@ -72,7 +72,7 @@ public class LeatherFragment extends Fragment {
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
                 VibrationMaterial.LEATHER_DISTANCE, VibrationMaterial.LEATHER_LENGTH,
-                vibrator, this.getContext(), R.raw.test);
+                vibrator, this.getContext(), R.raw.leather);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_leather);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

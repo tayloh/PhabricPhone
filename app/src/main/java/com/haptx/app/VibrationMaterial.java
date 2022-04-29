@@ -62,16 +62,19 @@ public class VibrationMaterial {
                 float movedDistance = mCalcDistance(mPrevVibrPos[0], mPrevVibrPos[1], currX, currY);
 
                 if (movedDistance > mVibrDistance) {
-                    mVibrator.vibrate((long) mVibrLength);
-                    mPrevVibrPos[0] = currX;
-                    mPrevVibrPos[1] = currY;
 
+                    // Play material sound
                     if (mMediaPlayer.isPlaying()){
                         mMediaPlayer.stop();
                         mMediaPlayer.release();
                         mMediaPlayer = MediaPlayer.create(mMediaContext, audioFile);
                     }
                     mMediaPlayer.start();
+
+                    // Vibrate
+                    mVibrator.vibrate((long) mVibrLength);
+                    mPrevVibrPos[0] = currX;
+                    mPrevVibrPos[1] = currY;
                 }
 
                 return false;
