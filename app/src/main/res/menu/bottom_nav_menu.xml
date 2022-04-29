@@ -17,5 +17,9 @@
         android:id="@+id/textile4"
         android:icon="@drawable/denim_icon"
         android:title="Denim" />
+    <item
+        android:id="@+id/settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        android:title="Settings" />
 
 </menu>

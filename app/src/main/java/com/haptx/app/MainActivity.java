@@ -41,6 +41,9 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new DenimFragment());
                     break;
 
+                case R.id.settings:
+                    replaceFragment(new SettingsFragment());
+                    break;
             }
 
             return true;

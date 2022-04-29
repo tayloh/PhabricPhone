@@ -63,11 +63,6 @@ public class WoolFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-        mVibrationMaterial = new VibrationMaterial(
-                VibrationMaterial.WOOL_DISTANCE, VibrationMaterial.WOOL_LENGTH,
-                vibrator, this.getContext(), R.raw.test);
     }
 
     @Override
@@ -75,6 +70,11 @@ public class WoolFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_wool, container, false);
+
+        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrationMaterial = new VibrationMaterial(
+                VibrationMaterial.WOOL_DISTANCE, VibrationMaterial.WOOL_LENGTH,
+                vibrator, this.getContext(), R.raw.test);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wool);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

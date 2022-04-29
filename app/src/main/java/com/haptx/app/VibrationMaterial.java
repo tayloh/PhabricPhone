@@ -30,6 +30,17 @@ public class VibrationMaterial {
 
     private View.OnTouchListener mOnTouchVibrator;
 
+    public static void resetVibrationMaterialSettings() {
+        WOOL_DISTANCE = 200;
+        WOOL_LENGTH = 100;
+        SILK_DISTANCE = 150;
+        SILK_LENGTH = 40;
+        LEATHER_DISTANCE = 50;
+        LEATHER_LENGTH = 60;
+        DENIM_DISTANCE = 25;
+        DENIM_LENGTH = 100;
+    }
+
     public VibrationMaterial(float vibrDistance, int vibrLength, Vibrator vibrator,
                              Context mediaContext, int audioFile) {
         mVibrDistance = vibrDistance;
