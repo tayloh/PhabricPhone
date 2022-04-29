@@ -29,19 +29,10 @@ public class DenimFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    // dist: 25, length: 100
 
+    private VibrationMaterial mVibrationMaterial;
     private ImageButton mMaterialSurface;
-    private Vibrator mVibrator;
-    private MediaPlayer mMediaPlayer;
-    private Context mContext;
-
-    private float[] mPrevVibrPos = {0, 0};
-    private float mVibrDistance = 25;
-    private float mVibrLength = 100;
-
-    private float mCalcDistance(float x1, float y1, float x2, float y2){
-        return (float) Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-    }
 
     public DenimFragment() {
         // Required empty public constructor
@@ -74,7 +65,11 @@ public class DenimFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-        mContext = this.getContext();
+
+        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrationMaterial = new VibrationMaterial(
+                VibrationMaterial.DENIM_DISTANCE, VibrationMaterial.DENIM_LENGTH,
+                vibrator, this.getContext(), R.raw.test);
     }
 
     @Override
@@ -83,36 +78,8 @@ public class DenimFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_denim, container, false);
 
-        mMediaPlayer = MediaPlayer.create(this.getContext(), R.raw.test);
-        mVibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_denim);
-        mMaterialSurface.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                int eventAction = motionEvent.getAction();
-
-                float currX = motionEvent.getX();
-                float currY = motionEvent.getY();
-                float movedDistance = mCalcDistance(mPrevVibrPos[0], mPrevVibrPos[1], currX, currY);
-
-                if (movedDistance > mVibrDistance) {
-                    mVibrator.vibrate((long) mVibrLength);
-                    mPrevVibrPos[0] = currX;
-                    mPrevVibrPos[1] = currY;
-
-                    if (mMediaPlayer.isPlaying()){
-                        mMediaPlayer.stop();
-                        mMediaPlayer.release();
-                        mMediaPlayer = MediaPlayer.create(mContext, R.raw.test);
-                    }
-                    mMediaPlayer.start();
-                }
-
-                return false;
-            }
-        });
+        mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());
 
         return rootView;
     }

@@ -1,6 +1,7 @@
 package com.haptx.app;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -28,16 +29,8 @@ public class LeatherFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    private VibrationMaterial mVibrationMaterial;
     private ImageButton mMaterialSurface;
-    private Vibrator mVibrator;
-
-    private float[] mPrevVibrPos = {0, 0};
-    private float mVibrDistance = 50;
-    private float mVibrLength = 60;
-
-    private float mCalcDistance(float x1, float y1, float x2, float y2){
-        return (float) Math.sqrt((x1-x2)*(x1-x2) + (y1-y2)*(y1-y2));
-    }
 
     public LeatherFragment() {
         // Required empty public constructor
@@ -68,6 +61,11 @@ public class LeatherFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+        Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+        mVibrationMaterial = new VibrationMaterial(
+                VibrationMaterial.LEATHER_DISTANCE, VibrationMaterial.LEATHER_LENGTH,
+                vibrator, this.getContext(), R.raw.test);
     }
 
     @Override
@@ -76,28 +74,8 @@ public class LeatherFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_leather, container, false);
 
-        mVibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_leather);
-        mMaterialSurface.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View view, MotionEvent motionEvent) {
-
-                int eventAction = motionEvent.getAction();
-
-                float currX = motionEvent.getX();
-                float currY = motionEvent.getY();
-                float movedDistance = mCalcDistance(mPrevVibrPos[0], mPrevVibrPos[1], currX, currY);
-
-                if (movedDistance > mVibrDistance) {
-                    mVibrator.vibrate((long) mVibrLength);
-                    mPrevVibrPos[0] = currX;
-                    mPrevVibrPos[1] = currY;
-                }
-
-                return false;
-            }
-        });
+        mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());
 
         return rootView;
     }
