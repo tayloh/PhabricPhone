@@ -1,6 +1,7 @@
 package com.haptx.app;
 
 import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -31,6 +32,8 @@ public class DenimFragment extends Fragment {
 
     private ImageButton mMaterialSurface;
     private Vibrator mVibrator;
+    private MediaPlayer mMediaPlayer;
+    private Context mContext;
 
     private float[] mPrevVibrPos = {0, 0};
     private float mVibrDistance = 25;
@@ -71,6 +74,7 @@ public class DenimFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        mContext = this.getContext();
     }
 
     @Override
@@ -79,6 +83,7 @@ public class DenimFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_denim, container, false);
 
+        mMediaPlayer = MediaPlayer.create(this.getContext(), R.raw.test);
         mVibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_denim);
@@ -96,6 +101,13 @@ public class DenimFragment extends Fragment {
                     mVibrator.vibrate((long) mVibrLength);
                     mPrevVibrPos[0] = currX;
                     mPrevVibrPos[1] = currY;
+
+                    if (mMediaPlayer.isPlaying()){
+                        mMediaPlayer.stop();
+                        mMediaPlayer.release();
+                        mMediaPlayer = MediaPlayer.create(mContext, R.raw.test);
+                    }
+                    mMediaPlayer.start();
                 }
 
                 return false;
