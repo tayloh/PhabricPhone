@@ -64,8 +64,8 @@ public class VibrationMaterial {
                 if (movedDistance > mVibrDistance) {
 
                     // Play material sound
-                    if (mMediaPlayer.isPlaying()){
-                        mMediaPlayer.stop();
+                    if (!mMediaPlayer.isPlaying()){
+                        //mMediaPlayer.stop();
                         mMediaPlayer.release();
                         mMediaPlayer = MediaPlayer.create(mMediaContext, audioFile);
                     }
