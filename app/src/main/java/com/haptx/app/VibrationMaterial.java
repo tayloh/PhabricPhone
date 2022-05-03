@@ -24,6 +24,8 @@ public class VibrationMaterial {
     private float mVibrDistance;
     private float mVibrLength;
 
+    private long mLastVibrationTime;
+
     private Vibrator mVibrator;
     private Context mMediaContext;
     private MediaPlayer mMediaPlayer;
@@ -43,11 +45,25 @@ public class VibrationMaterial {
 
     public VibrationMaterial(float vibrDistance, int vibrLength, Vibrator vibrator,
                              Context mediaContext, int audioFile) {
+        // See if I can get the mediaContext in some other way
+        // See if I can get the vibrator in some other way
+        // => Perform all instantiation in the onTouch method
+        // since I can get the View there, and therefore the
+        // context, and maybe access the activity for the vibrator as
+        // well?
+        // Maybe it isn't super efficient to instantiate new objects
+        // on every onTouch event... but it's ugly to have the
+        // mediaContext and vibrator as arguments in the constructor.
+        // Could check if vibr and context is null in
+        // onTouch, and instantiate member variables if they are.
+        // OR I just leave it as it is, since it WORKS.
+
         mVibrDistance = vibrDistance;
         mVibrLength = vibrLength;
 
         mVibrator = vibrator;
         mMediaContext = mediaContext;
+        mLastVibrationTime = System.currentTimeMillis();
 
         mMediaPlayer = MediaPlayer.create(mMediaContext, audioFile);
 
@@ -71,10 +87,17 @@ public class VibrationMaterial {
                     }
                     mMediaPlayer.start();
 
-                    // Vibrate
-                    mVibrator.vibrate((long) mVibrLength);
-                    mPrevVibrPos[0] = currX;
-                    mPrevVibrPos[1] = currY;
+                    // Check if last vibration is done
+                    long now = System.currentTimeMillis();
+                    if (now - mLastVibrationTime >= mVibrLength * 2) {
+                        mLastVibrationTime = now;
+
+                        // Vibrate
+                        mVibrator.vibrate(0); // Or cancel() have to test
+                        mVibrator.vibrate((long) mVibrLength);
+                        mPrevVibrPos[0] = currX;
+                        mPrevVibrPos[1] = currY;
+                    }
                 }
 
                 return false;
