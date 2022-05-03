@@ -8,6 +8,9 @@ import android.os.Vibrator;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VibrationMaterial {
 
     public static float WOOL_DISTANCE = 200;
@@ -23,8 +26,14 @@ public class VibrationMaterial {
 
     private float mVibrDistance;
     private float mVibrLength;
+    private int mAudioFile;
 
     private long mLastVibrationTime;
+
+    private List<LineCollider> mCollisionLines;
+    private boolean mEnableLineColliders = false;
+    private boolean mEnableDistanceBasedVibrations = true;
+
 
     private Vibrator mVibrator;
     private Context mMediaContext;
@@ -57,15 +66,16 @@ public class VibrationMaterial {
         // Could check if vibr and context is null in
         // onTouch, and instantiate member variables if they are.
         // OR I just leave it as it is, since it WORKS.
-
+        mCollisionLines = new ArrayList<LineCollider>();
         mVibrDistance = vibrDistance;
         mVibrLength = vibrLength;
+        mAudioFile = audioFile;
 
         mVibrator = vibrator;
         mMediaContext = mediaContext;
         mLastVibrationTime = System.currentTimeMillis();
 
-        mMediaPlayer = MediaPlayer.create(mMediaContext, audioFile);
+        mMediaPlayer = MediaPlayer.create(mMediaContext, mAudioFile);
 
         mOnTouchVibrator = new View.OnTouchListener() {
             @Override
@@ -75,34 +85,68 @@ public class VibrationMaterial {
 
                 float currX = motionEvent.getX();
                 float currY = motionEvent.getY();
-                float movedDistance = mCalcDistance(mPrevVibrPos[0], mPrevVibrPos[1], currX, currY);
 
-                if (movedDistance > mVibrDistance) {
-
-                    // Play material sound
-                    if (!mMediaPlayer.isPlaying()){
-                        //mMediaPlayer.stop();
-                        mMediaPlayer.release();
-                        mMediaPlayer = MediaPlayer.create(mMediaContext, audioFile);
-                    }
-                    mMediaPlayer.start();
-
-                    // Check if last vibration is done
-                    long now = System.currentTimeMillis();
-                    if (now - mLastVibrationTime >= mVibrLength * 2) {
-                        mLastVibrationTime = now;
-
-                        // Vibrate
-                        mVibrator.vibrate(0); // Or cancel() have to test
-                        mVibrator.vibrate((long) mVibrLength);
-                        mPrevVibrPos[0] = currX;
-                        mPrevVibrPos[1] = currY;
-                    }
-                }
+                mDistanceBasedVibration(currX, currY);
+                mLineBasedVibration(currX, currY);
 
                 return false;
             }
         };
+    }
+
+    private void mLineBasedVibration(float x, float y){
+        if (!mEnableLineColliders) return;
+
+        // Line collisions
+        for (LineCollider collider : mCollisionLines) {
+            if (collider.checkForCollision(x, y)) {
+                mPlaySound(true);
+                mVibrator.cancel();
+                mVibrator.vibrate((long) mVibrLength);
+            }
+        }
+    }
+
+    private void mDistanceBasedVibration(float x, float y){
+        if (!mEnableDistanceBasedVibrations) return;
+
+        float movedDistance = mCalcDistance(mPrevVibrPos[0], mPrevVibrPos[1], x, y);
+        if (movedDistance > mVibrDistance) {
+
+            // Play material sound
+            mPlaySound(false);
+
+            // Check if last vibration is done
+            long now = System.currentTimeMillis();
+            if (now - mLastVibrationTime >= mVibrLength * 1.5) {
+                mLastVibrationTime = now;
+
+                // Vibrate
+                mVibrator.cancel();
+                mVibrator.vibrate((long) mVibrLength);
+
+
+                mPrevVibrPos[0] = x;
+                mPrevVibrPos[1] = y;
+            }
+        }
+    }
+
+    private void mPlaySound(boolean isInterruptable){
+        if (isInterruptable) {
+            if (mMediaPlayer.isPlaying()){
+                mMediaPlayer.stop();
+                mMediaPlayer.release();
+                mMediaPlayer = MediaPlayer.create(mMediaContext, mAudioFile);
+            }
+        } else {
+            if (!mMediaPlayer.isPlaying()){
+                //mMediaPlayer.stop();
+                mMediaPlayer.release();
+                mMediaPlayer = MediaPlayer.create(mMediaContext, mAudioFile);
+            }
+        }
+        mMediaPlayer.start();
     }
 
     private float mCalcDistance(float x1, float y1, float x2, float y2){
@@ -111,6 +155,26 @@ public class VibrationMaterial {
 
     public View.OnTouchListener getOnTouchVibrator(){
         return mOnTouchVibrator;
+    }
+
+    public void enableDistanceBasedVibrations(){
+        mEnableDistanceBasedVibrations = true;
+    }
+
+    public void disableDistanceBasedVibrations(){
+        mEnableDistanceBasedVibrations = false;
+    }
+
+    public void enableLineCollider() {
+        mEnableLineColliders = true;
+    }
+
+    public void disableLineCollider() {
+        mEnableLineColliders = false;
+    }
+
+    public void addLineCollider(float y) {
+        mCollisionLines.add(new LineCollider(y));
     }
 
     public float getVibrLength() {

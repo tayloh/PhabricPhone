@@ -76,6 +76,11 @@ public class WoolFragment extends Fragment {
                 VibrationMaterial.WOOL_DISTANCE, VibrationMaterial.WOOL_LENGTH,
                 vibrator, this.getContext(), R.raw.wool);
 
+        mVibrationMaterial.enableLineCollider();
+        mVibrationMaterial.disableDistanceBasedVibrations();
+        mVibrationMaterial.addLineCollider(500);
+        mVibrationMaterial.addLineCollider(1000);
+
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wool);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());
 
