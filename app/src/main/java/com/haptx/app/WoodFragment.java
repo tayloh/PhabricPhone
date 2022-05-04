@@ -1,24 +1,22 @@
 package com.haptx.app;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.os.Vibrator;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link WoolFragment#newInstance} factory method to
+ * Use the {@link WoodFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class WoolFragment extends Fragment {
+public class WoodFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,12 +27,10 @@ public class WoolFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    // dist: 200, length: 100
-
     private VibrationMaterial mVibrationMaterial;
     private ImageButton mMaterialSurface;
 
-    public WoolFragment() {
+    public WoodFragment() {
         // Required empty public constructor
     }
 
@@ -44,11 +40,11 @@ public class WoolFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment WoolFragment.
+     * @return A new instance of fragment WoodFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static WoolFragment newInstance(String param1, String param2) {
-        WoolFragment fragment = new WoolFragment();
+    public static WoodFragment newInstance(String param1, String param2) {
+        WoodFragment fragment = new WoodFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -69,14 +65,32 @@ public class WoolFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_wool, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_wood, container, false);
 
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
-                VibrationMaterial.WOOL_DISTANCE, VibrationMaterial.WOOL_LENGTH,
-                vibrator, this.getContext(), R.raw.wool);
+                0, 120,
+                vibrator, this.getContext(), R.raw.wood_trim2);
 
-        mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wool);
+        mVibrationMaterial.enableLineCollider();
+        mVibrationMaterial.disableDistanceBasedVibrations();
+
+        // Need to match these to image
+        mVibrationMaterial.addLineCollider(100, (long) 60);
+        mVibrationMaterial.addLineCollider(150, (long) 60);
+        mVibrationMaterial.addLineCollider(250, (long) 60);
+        mVibrationMaterial.addLineCollider(350, (long) 60);
+        mVibrationMaterial.addLineCollider(450, (long) 60);
+        mVibrationMaterial.addLineCollider(600, (long) 60);
+        mVibrationMaterial.addLineCollider(750, (long) 120);
+        mVibrationMaterial.addLineCollider(1300, (long) 120);
+        mVibrationMaterial.addLineCollider(1500, (long) 100);
+        mVibrationMaterial.addLineCollider(1650, (long) 60);
+        mVibrationMaterial.addLineCollider(1750, (long) 60);
+        mVibrationMaterial.addLineCollider(1850, (long) 60);
+        mVibrationMaterial.addLineCollider(1950, (long) 60);
+
+        mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wood);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());
 
         return rootView;

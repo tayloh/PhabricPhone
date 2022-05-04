@@ -32,13 +32,17 @@ public class MainActivity extends AppCompatActivity {
                 case R.id.textile2:
                     replaceFragment(new WoolFragment());
                     break;
-
+/*
                 case R.id.textile3:
                     replaceFragment(new LeatherFragment());
-                    break;
+                    break;*/
 
                 case R.id.textile4:
                     replaceFragment(new DenimFragment());
+                    break;
+
+                case R.id.textile5:
+                    replaceFragment(new WoodFragment());
                     break;
 
                 case R.id.settings:

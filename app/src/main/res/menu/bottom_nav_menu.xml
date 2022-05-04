@@ -9,14 +9,18 @@
         android:id="@+id/textile2"
         android:icon="@drawable/wool_icon2"
         android:title="Wool" />
-    <item
+    <!--<item
         android:id="@+id/textile3"
         android:icon="@drawable/leather_icon"
-        android:title="Leather" />
+        android:title="Leather" />-->
     <item
         android:id="@+id/textile4"
         android:icon="@drawable/denim_icon"
         android:title="Denim" />
+    <item
+        android:id="@+id/textile5"
+        android:icon="@drawable/wood_icon"
+        android:title="Wood" />
     <item
         android:id="@+id/settings"
         android:icon="@drawable/ic_baseline_settings_24"

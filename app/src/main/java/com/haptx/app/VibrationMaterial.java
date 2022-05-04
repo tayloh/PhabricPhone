@@ -101,8 +101,8 @@ public class VibrationMaterial {
         for (LineCollider collider : mCollisionLines) {
             if (collider.checkForCollision(x, y)) {
                 mPlaySound(true);
-                mVibrator.cancel();
-                mVibrator.vibrate((long) mVibrLength);
+
+                mVibrator.vibrate(collider.getVibrLength());
             }
         }
     }
@@ -173,8 +173,8 @@ public class VibrationMaterial {
         mEnableLineColliders = false;
     }
 
-    public void addLineCollider(float y) {
-        mCollisionLines.add(new LineCollider(y));
+    public void addLineCollider(float y, long vibrLength) {
+        mCollisionLines.add(new LineCollider(y, vibrLength));
     }
 
     public float getVibrLength() {
