@@ -76,19 +76,19 @@ public class WoodFragment extends Fragment {
         mVibrationMaterial.disableDistanceBasedVibrations();
 
         // Need to match these to image
-        mVibrationMaterial.addLineCollider(100, (long) 60);
-        mVibrationMaterial.addLineCollider(150, (long) 60);
-        mVibrationMaterial.addLineCollider(250, (long) 60);
-        mVibrationMaterial.addLineCollider(350, (long) 60);
-        mVibrationMaterial.addLineCollider(450, (long) 60);
-        mVibrationMaterial.addLineCollider(600, (long) 60);
-        mVibrationMaterial.addLineCollider(750, (long) 120);
-        mVibrationMaterial.addLineCollider(1300, (long) 120);
-        mVibrationMaterial.addLineCollider(1500, (long) 100);
-        mVibrationMaterial.addLineCollider(1650, (long) 60);
-        mVibrationMaterial.addLineCollider(1750, (long) 60);
-        mVibrationMaterial.addLineCollider(1850, (long) 60);
-        mVibrationMaterial.addLineCollider(1950, (long) 60);
+        mVibrationMaterial.addLineCollider(100, (long) 100);
+        mVibrationMaterial.addLineCollider(150, (long) 100);
+        mVibrationMaterial.addLineCollider(250, (long) 100);
+        mVibrationMaterial.addLineCollider(350, (long) 100);
+        mVibrationMaterial.addLineCollider(450, (long) 100);
+        mVibrationMaterial.addLineCollider(600, (long) 100); // 60
+        mVibrationMaterial.addLineCollider(750, (long) 180); // 120
+        mVibrationMaterial.addLineCollider(1300, (long) 180); // 120
+        mVibrationMaterial.addLineCollider(1500, (long) 120); // 100
+        mVibrationMaterial.addLineCollider(1650, (long) 100); // 60
+        mVibrationMaterial.addLineCollider(1750, (long) 100); // 60
+        mVibrationMaterial.addLineCollider(1850, (long) 100); // 60
+        mVibrationMaterial.addLineCollider(1950, (long) 100); // 60
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wood);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

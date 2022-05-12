@@ -15,8 +15,8 @@ public class VibrationMaterial {
 
     public static float WOOL_DISTANCE = 200;
     public static int WOOL_LENGTH = 100;
-    public static float SILK_DISTANCE = 150;
-    public static int SILK_LENGTH = 40;
+    public static float SILK_DISTANCE = 95;
+    public static int SILK_LENGTH = 65;
     public static float LEATHER_DISTANCE = 50;
     public static int LEATHER_LENGTH = 60;
     public static float DENIM_DISTANCE = 25;
