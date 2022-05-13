@@ -74,7 +74,7 @@ public class WoolFragment extends Fragment {
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
                 VibrationMaterial.WOOL_DISTANCE, VibrationMaterial.WOOL_LENGTH,
-                vibrator, this.getContext(), R.raw.wool);
+                vibrator, this.getContext(), R.raw.ylle3);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_wool);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

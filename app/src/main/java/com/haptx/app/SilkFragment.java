@@ -76,7 +76,7 @@ public class SilkFragment extends Fragment {
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
                 VibrationMaterial.SILK_DISTANCE, VibrationMaterial.SILK_LENGTH,
-                vibrator, this.getContext(), R.raw.silk);
+                vibrator, this.getContext(), R.raw.silke3);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_silk);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

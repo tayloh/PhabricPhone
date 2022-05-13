@@ -76,7 +76,7 @@ public class DenimFragment extends Fragment {
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
                 VibrationMaterial.DENIM_DISTANCE, VibrationMaterial.DENIM_LENGTH,
-                vibrator, this.getContext(), R.raw.denim);
+                vibrator, this.getContext(), R.raw.denim3);
 
         mMaterialSurface = (ImageButton) rootView.findViewById(R.id.textile_denim);
         mMaterialSurface.setOnTouchListener(mVibrationMaterial.getOnTouchVibrator());

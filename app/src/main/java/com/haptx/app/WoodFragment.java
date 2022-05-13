@@ -70,7 +70,7 @@ public class WoodFragment extends Fragment {
         Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
         mVibrationMaterial = new VibrationMaterial(
                 0, 120,
-                vibrator, this.getContext(), R.raw.wood_trim2);
+                vibrator, this.getContext(), R.raw.tra3);
 
         mVibrationMaterial.enableLineCollider();
         mVibrationMaterial.disableDistanceBasedVibrations();
